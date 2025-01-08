@@ -1,0 +1,52 @@
+{
+  "navMain": [
+    {
+      "title": "Add UI",
+      "url": "#",
+      "icon": "CirclePlus",
+      "isActive": true
+    },
+    {
+      "title": "Pages",
+      "url": "#",
+      "icon": "Layers",
+      "isActive": false
+    },
+    {
+      "title": "Component tree",
+      "url": "#",
+      "icon": "SquareDashedMousePointer",
+      "isActive": false
+    },
+    {
+      "title": "Code",
+      "url": "#",
+      "icon": "Code",
+      "isActive": false
+    },
+    {
+      "title": "Code search",
+      "url": "#",
+      "icon": "Search",
+      "isActive": false
+    },
+    {
+      "title": "State",
+      "url": "#",
+      "icon": "Braces",
+      "isActive": false
+    },
+    {
+      "title": "Releases and histroy",
+      "url": "#",
+      "icon": "History",
+      "isActive": false
+    },
+    {
+      "title": "App settings",
+      "url": "#",
+      "icon": "Settings",
+      "isActive": false
+    }
+  ]
+}
