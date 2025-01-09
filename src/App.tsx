@@ -3,8 +3,8 @@ import "./App.css";
 import { routes } from "./routes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ThemeProvider } from "./context/theme-provider";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { GlobalStateProvider } from "./context/global-state-context"
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { GlobalStateProvider } from "./context/global-state-context";
 
 const queryClient = new QueryClient();
 
@@ -16,7 +16,7 @@ function App() {
           <RouterProvider router={routes} />
         </GlobalStateProvider>
       </ThemeProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
     </QueryClientProvider>
   );
 }

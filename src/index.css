@@ -106,3 +106,11 @@
     @apply gradient text-transparent bg-clip-text;
   }
 }
+
+.font-inter {
+  font-family: "Inter", serif !important ;
+}
+
+.font-poppins {
+  font-family: "Poppins", serif !important ;
+}
