@@ -20,17 +20,23 @@ const Inspector = ({
   setDashboardComponents,
 }: InspectorProps) => {
   const handleDelete = (index: number | null) => {
-    setDashboardComponents(dashboardComponents.filter((_, i) => i !== index));
-    setSelectedEditItem(null);
-    setInspectorOpen(false);
+    if (index !== null) {
+      setDashboardComponents(dashboardComponents.filter((_, i) => i !== index));
+      setSelectedEditItem(null);
+      setInspectorOpen(false);
+    }
   };
+
+  const selectedComponent =
+    selectedEditItem !== null && dashboardComponents[selectedEditItem];
+
   return (
-    <div className=" border-l max-w-[320px] w-full h-full bg-white dark:bg-black">
+    <div className="border-l max-w-[320px] w-full h-full bg-white dark:bg-black">
       <div className="flex flex-col">
         <div className="flex justify-between text-black p-2 border-b dark:border-[#5b5b5b6e]">
           {dashboardComponents.length > 0 && selectedEditItem !== null ? (
             <h1 className="text-[13px] font-medium dark:text-[#ffffff6e]">
-              {dashboardComponents[selectedEditItem].name}
+              {selectedComponent?.name || "Unnamed Component"}
             </h1>
           ) : (
             <h1 className="text-[13px] font-medium dark:text-[#ffffff6e]">
@@ -47,17 +53,15 @@ const Inspector = ({
         </div>
 
         <div className="flex flex-col gap-3">
-          {dashboardComponents[selectedEditItem] ? (
+          {selectedComponent ? (
             <>
               <div className="m-[2px]">
-                {dashboardComponents[selectedEditItem]?.props.map(
-                  (item: string, key: number) => (
-                    <PropertiesDropdown
-                      item={item}
-                      key={`PropertiesDropdown-${key}`}
-                    />
-                  )
-                )}
+                {selectedComponent.props.map((item: string, key: number) => (
+                  <PropertiesDropdown
+                    item={item}
+                    key={`PropertiesDropdown-${key}`}
+                  />
+                ))}
               </div>
               <div className="grid grid-cols-2 gap-3 px-10 mt-10">
                 <Button variant="secondary" size="sm">
@@ -84,5 +88,6 @@ const Inspector = ({
     </div>
   );
 };
+
 
 export default Inspector;
