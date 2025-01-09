@@ -6,6 +6,7 @@ import SignUp from "@/pages/auth/sign-up";
 import Dashboard from "@/pages/dashboard/dashboard";
 import Location from "@/pages/dashboard/location";
 import Editor from "@/pages/editor";
+
 import Logout from "@/pages/misc/logout";
 import PageNotFound from "@/pages/misc/page-not-found";
 import { createBrowserRouter } from "react-router-dom";

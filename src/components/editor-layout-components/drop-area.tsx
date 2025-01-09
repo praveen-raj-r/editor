@@ -1,15 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Dispatch, SetStateAction, useState } from "react";
+import {
+  Dispatch,
+  DragEvent,
+  isValidElement,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from "react";
 import ReactGridLayout, { WidthProvider } from "react-grid-layout";
-// import Inspector from "@/components/editor-layout-components/inspector";
-// import InspectorPoc from "./inspector-poc";
 
 const Layout = WidthProvider(ReactGridLayout);
 
 interface Component {
   name: string;
   props?: Record<string, any>;
-  element: React.ReactNode;
+  element: ReactNode;
   image?: string;
 }
 
@@ -17,103 +22,94 @@ interface DropAreaProps {
   components: Component[];
   isInspectorOpen: boolean;
   setInspectorOpen: Dispatch<SetStateAction<boolean>>;
+  setSelectedEditItem: Dispatch<React.SetStateAction<number | null>>;
+  selectedEditItem: number | null;
+  dashboardComponents: Component[];
+  setDashboardComponents: React.Dispatch<React.SetStateAction<Component[]>>;
 }
 
-function DropArea({ components, setInspectorOpen }: DropAreaProps) {
-  const [selectedEditItem, setSelectedEditItem] = useState<number | null>(null);
-
-  const [dashboardComponents, setDashboardComponents] = useState<any[]>([]);
+function DropArea({
+  components,
+  setInspectorOpen,
+  setSelectedEditItem,
+  selectedEditItem,
+  setDashboardComponents,
+  dashboardComponents,
+}: DropAreaProps) {
   const [layout, setLayout] = useState<any[]>([]);
 
-  const handleOnDragOver = (e: React.DragEvent) => e.preventDefault();
+  const handleOnDragOver = (e: DragEvent) => e.preventDefault();
 
-  const handleOnDrop = (e: React.DragEvent) => {
-    const widgetIndex = e.dataTransfer.getData("widgetIndex");
+  const handleOnDrop = (e: DragEvent) => {
+    e.preventDefault();
+    const widgetIndex = parseInt(e.dataTransfer.getData("widgetIndex"));
 
-    if (widgetIndex) {
-      const newComponent = components[parseInt(widgetIndex)];
-      setDashboardComponents((prevDashboardComponents) => {
-        const updatedDashboardComponents = [
-          ...prevDashboardComponents,
-          newComponent,
-        ];
+    if (!isNaN(widgetIndex)) {
+      setDashboardComponents([...dashboardComponents, components[widgetIndex]]);
 
-        // Update layout after adding the new component
-        setLayout((prevLayout) => {
-          const layoutLastElement = prevLayout.at(-1);
+      const layoutLastElement = layout.at(-1);
 
-          return [
-            ...prevLayout,
-            {
-              i: updatedDashboardComponents.length.toString(),
-              x: layoutLastElement ? layoutLastElement.x + 1 : 0,
-              y: layoutLastElement ? Math.ceil(layoutLastElement.y / 12) : 0,
-              w: 4,
-              h: 2,
-            },
-          ];
-        });
-
-        return updatedDashboardComponents;
-      });
-
-      setSelectedEditItem(dashboardComponents.length);
-      setInspectorOpen(true);
+      setLayout([
+        ...layout,
+        {
+          i: dashboardComponents.length.toString(),
+          x: layoutLastElement ? layoutLastElement.x + 1 : 0,
+          y: layoutLastElement ? Math.ceil(layoutLastElement.y / 12) : 0,
+          w: 4,
+          h: 2,
+        },
+      ]);
     }
+    setSelectedEditItem(dashboardComponents.length);
+    setInspectorOpen(true);
   };
 
   return (
-    <div
-      onDragOver={handleOnDragOver}
-      onDrop={handleOnDrop}
-      className="relative w-full h-full p-3 flex gap-1"
-    >
-      <Layout
-        className=" layout border w-full border-[#3b82f6]  min-h-96 py-2 px-3"
-        cols={12}
-        layout={layout}
-        rowHeight={30}
-        onLayoutChange={(newLayout) => setLayout(newLayout)}
-      >
-        {dashboardComponents.map((e, index) => {
-          const ComponentType = e.element.type;
+    <div className="size-full p-5">
+      <div className="bg-[#f6f6f6] dark:bg-[#1a1919] relative size-full p-3 border-[#3b82f6] border">
+        <div
+          onDragOver={handleOnDragOver}
+          onDrop={handleOnDrop}
+          className="relative w-full h-full p-3 flex gap-1"
+        >
+          <Layout
+            className="layout border w-full border-[#3b82f6] min-h-96 py-2 px-3"
+            cols={12}
+            layout={layout}
+            rowHeight={30}
+            onLayoutChange={(newLayout) => setLayout(newLayout)}
+          >
+            {dashboardComponents.map((e, index) => {
+              const ComponentType = isValidElement(e.element)
+                ? e.element.type
+                : null;
 
-          return (
-            <div
-              key={index}
-              className={` py-2 px-3 hover:border-2 bg-red-400 border-1 min-h-max cursor-move hover:border-dashed hover:border-[#3b82f6] ${
-                index === selectedEditItem
-                  ? "border-[#9e9e9e]"
-                  : "border-transparent"
-              } `}
-            >
-              <div
-                className="w-full h-full cursor-default overflow-hidden"
-                onMouseDown={(e) => {
-                  e.stopPropagation();
-                  setSelectedEditItem((prevSelected) =>
-                    prevSelected === index ? null : index
-                  );
-                }}
-              >
-                {ComponentType ? (
-                  <ComponentType key={e.name} {...e.props} />
-                ) : null}
-              </div>
-            </div>
-          );
-        })}
-      </Layout>
-
-      {/* <Inspector
-        dashboardComponents={dashboardComponents}
-        selectedEditItem={selectedEditItem}
-        setInspectorOpen={setInspectorOpen}
-        setSelectedEditItem={setSelectedEditItem}
-        setDashboardComponents={setDashboardComponents}
-        isInspectorOpen={isInspectorOpen}
-        className="w-auto"
-      /> */}
+              return (
+                <div
+                  key={index}
+                  className={` py-2 px-3 hover:border-2 bg-red-400 border-1 min-h-max cursor-move hover:border-dashed hover:border-[#3b82f6] ${
+                    index === selectedEditItem
+                      ? "border-[#9e9e9e]"
+                      : "border-transparent"
+                  } `}
+                >
+                  <div
+                    className="w-full h-full cursor-default overflow-hidden"
+                    onMouseDown={(e) => {
+                      e.stopPropagation();
+                      setSelectedEditItem((prevSelected) =>
+                        prevSelected === index ? null : index
+                      );
+                    }}
+                  >
+                    {ComponentType ? <ComponentType key={index} /> : null}
+                  </div>
+                </div>
+              );
+            })}
+          </Layout>
+        </div>
+      </div>
     </div>
   );
 }

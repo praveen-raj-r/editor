@@ -1,46 +1,88 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-import { SquareMousePointer } from "lucide-react";
-
-interface Component {
-  name: string;
-  props?: Record<string, any>;
-  element: React.ReactNode;
-  image?: string;
-}
+import { ChevronsRight, Copy, Trash } from "lucide-react";
+import { Dispatch, SetStateAction } from "react";
+import { Button } from "@/components/ui/button";
+import PropertiesDropdown from "./properties-dropdown";
 
 interface InspectorProps {
-  className: string;
-  dashboardComponents: Component[];
-  setSelectedEditItem: React.Dispatch<React.SetStateAction<number | null>>;
-  setDashboardComponents: React.Dispatch<React.SetStateAction<Component[]>>;
+  setInspectorOpen: Dispatch<SetStateAction<boolean>>;
   selectedEditItem: number | null;
-  setInspectorOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  isInspectorOpen: boolean;
+  dashboardComponents: any[];
+  setSelectedEditItem: React.Dispatch<React.SetStateAction<number | null>>;
+  setDashboardComponents: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
-function Inspector({
-  className,
-  dashboardComponents,
-  selectedEditItem,
+const Inspector = ({
   setInspectorOpen,
-  isInspectorOpen,
-}: InspectorProps) {
-  return dashboardComponents.length
-    ? selectedEditItem != null && (
-        <div className={`${className}`}>
-          <div
-            className="rounded flex justify-center text-[13px] gap-3 p-1 items-center text-black bg-[#f8f2f2] border border-[#bdb1b1]"
+  selectedEditItem,
+  dashboardComponents,
+  setSelectedEditItem,
+  setDashboardComponents,
+}: InspectorProps) => {
+  const handleDelete = (index: number | null) => {
+    setDashboardComponents(dashboardComponents.filter((_, i) => i !== index));
+    setSelectedEditItem(null);
+    setInspectorOpen(false);
+  };
+  return (
+    <div className=" border-l max-w-[320px] w-full h-full bg-white dark:bg-black">
+      <div className="flex flex-col">
+        <div className="flex justify-between text-black p-2 border-b dark:border-[#5b5b5b6e]">
+          {dashboardComponents.length > 0 && selectedEditItem !== null ? (
+            <h1 className="text-[13px] font-medium dark:text-[#ffffff6e]">
+              {dashboardComponents[selectedEditItem].name}
+            </h1>
+          ) : (
+            <h1 className="text-[13px] font-medium dark:text-[#ffffff6e]">
+              No components
+            </h1>
+          )}
+          <ChevronsRight
+            className="dark:text-white cursor-pointer"
+            size={18}
             onClick={() => {
-              setInspectorOpen(!isInspectorOpen);
+              setInspectorOpen(false);
             }}
-          >
-            Inspector
-            <SquareMousePointer strokeWidth={1} stroke="#000" size={16} />
-          </div>
+          />
         </div>
-      )
-    : null;
-}
+
+        <div className="flex flex-col gap-3">
+          {dashboardComponents[selectedEditItem] ? (
+            <>
+              <div className="m-[2px]">
+                {dashboardComponents[selectedEditItem]?.props.map(
+                  (item: string, key: number) => (
+                    <PropertiesDropdown
+                      item={item}
+                      key={`PropertiesDropdown-${key}`}
+                    />
+                  )
+                )}
+              </div>
+              <div className="grid grid-cols-2 gap-3 px-10 mt-10">
+                <Button variant="secondary" size="sm">
+                  <Copy /> Duplicate
+                </Button>
+                <Button
+                  onClick={() => {
+                    handleDelete(selectedEditItem);
+                  }}
+                  variant="destructive"
+                  size="sm"
+                >
+                  <Trash /> Delete
+                </Button>
+              </div>
+            </>
+          ) : (
+            <div className="border dark:border-[#ffffff6e] text-center rounded-sm py-px text-sm dark:text-[#ffffff6e] text-[#4d4a4a] select-none mx-auto p-3 mt-3">
+              No components selected
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export default Inspector;

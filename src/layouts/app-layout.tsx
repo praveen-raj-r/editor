@@ -7,7 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 const AppLayout: FC = () => {
   return (
-    <SidebarProvider>
+    <SidebarProvider className="font-inter">
       <AppSidebar />
 
       <div className="w-full max-h-screen p-0">

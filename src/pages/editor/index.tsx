@@ -11,6 +11,7 @@ function Editor() {
 
   return (
     <SidebarProvider
+      className="font-inter"
       style={
         {
           "--sidebar-width": componentsSidebarWidth,

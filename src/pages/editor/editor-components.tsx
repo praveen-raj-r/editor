@@ -17,18 +17,46 @@ const componentImages: Record<string, string> = data.components.reduce(
 );
 
 const components: Component[] = [
-  { name: "Donut chart", props: {}, element: <div>Donut chart</div> },
-  { name: "Bar chart", props: {}, element: <div>Bar chart</div> },
-  { name: "Table", props: {}, element: <div>Table</div> },
-  { name: "Info cards", props: {}, element: <div>Info cards</div> },
-  { name: "Label", props: {}, element: <div>Label</div> },
+  {
+    name: "Donut chart",
+    props: ["content", "color", "size", "weight"],
+    element: <div>Donut chart</div>,
+  },
+  {
+    name: "Bar chart",
+    props: ["content", "color", "size", "weight"],
+    element: <div>Bar chart</div>,
+  },
+  {
+    name: "Table",
+    props: ["content", "color", "size", "weight"],
+    element: <div>Table</div>,
+  },
+  {
+    name: "Info cards",
+    props: ["content", "color", "size", "weight"],
+    element: <div>Info cards</div>,
+  },
+  {
+    name: "Label",
+    props: ["content", "color", "size", "weight"],
+    element: <div>Label</div>,
+  },
   {
     name: "Performance tracker",
-    props: {},
+    props: ["content", "color", "size", "weight"],
     element: <div>Performance tracker</div>,
   },
-  { name: "Tabbed Container", props: {}, element: <div>Tabbed Container</div> },
-  { name: "Stat Card", props: {}, element: <div>Stat Card</div> },
+  {
+    name: "Tabbed Container",
+    props: ["content", "color", "size", "weight"],
+    element: <div>Tabbed Container</div>,
+  },
+  {
+    name: "Stat Card",
+    props: ["content", "color", "size", "weight"],
+    element: <div>Stat Card</div>,
+  },
 ];
 
 components.forEach((component) => {
