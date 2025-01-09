@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useMoveBack } from "@/hooks/use-move-back";
 import { LinksProps } from "@/types";
-import links from "@/data/logout-links.json";
+import links from "@/data/app/logout-links.json";
 
 const Logout: FC = () => {
   const avatar = "https://github.com/shadcn.png";

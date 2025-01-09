@@ -11,7 +11,6 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { ElementType } from "react";
-import { navMain as data } from "@/data/editor/sidebar.json";
 
 type SidebarItem = {
   title: string;
@@ -23,11 +22,13 @@ type SidebarItem = {
 type PrimarySidebarProps = {
   activeItem: SidebarItem;
   setActiveItem: (item: SidebarItem) => void;
+  data: SidebarItem[];
 };
 
 const PrimarySidebar: React.FC<PrimarySidebarProps> = ({
   activeItem,
   setActiveItem,
+  data,
 }) => {
   const { setOpen } = useSidebar();
 

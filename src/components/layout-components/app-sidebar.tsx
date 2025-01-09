@@ -12,7 +12,7 @@ import NavMain from "./nav-main";
 import NavUser from "./nav-user";
 import TeamSwitcher from "./team-switcher";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import data from "@/data/sidebar.json";
+import data from "@/data/app/sidebar.json";
 
 const AppSidebar: FC = ({ ...props }: React.ComponentProps<typeof Sidebar>) => {
   return (

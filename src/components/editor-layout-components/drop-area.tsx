@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import ReactGridLayout, { WidthProvider } from "react-grid-layout";
-import Inspector from "./inspector";
+// import Inspector from "@/components/editor-layout-components/inspector";
+// import InspectorPoc from "./inspector-poc";
 
 const Layout = WidthProvider(ReactGridLayout);
 
@@ -14,11 +15,13 @@ interface Component {
 
 interface DropAreaProps {
   components: Component[];
+  isInspectorOpen: boolean;
+  setInspectorOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-function DropArea({ components }: DropAreaProps) {
+function DropArea({ components, setInspectorOpen }: DropAreaProps) {
   const [selectedEditItem, setSelectedEditItem] = useState<number | null>(null);
-  const [isInspectorOpen, setInspectorOpen] = useState(false);
+
   const [dashboardComponents, setDashboardComponents] = useState<any[]>([]);
   const [layout, setLayout] = useState<any[]>([]);
 
@@ -63,10 +66,10 @@ function DropArea({ components }: DropAreaProps) {
     <div
       onDragOver={handleOnDragOver}
       onDrop={handleOnDrop}
-      className="relative w-full h-full p-3"
+      className="relative w-full h-full p-3 flex gap-1"
     >
       <Layout
-        className="w-full layout"
+        className=" layout border w-full border-[#3b82f6]  min-h-96 py-2 px-3"
         cols={12}
         layout={layout}
         rowHeight={30}
@@ -78,7 +81,7 @@ function DropArea({ components }: DropAreaProps) {
           return (
             <div
               key={index}
-              className={`p-3 border-2 min-h-max cursor-move hover:border-dashed hover:border-[#9e9e9e] ${
+              className={` py-2 px-3 hover:border-2 bg-red-400 border-1 min-h-max cursor-move hover:border-dashed hover:border-[#3b82f6] ${
                 index === selectedEditItem
                   ? "border-[#9e9e9e]"
                   : "border-transparent"
@@ -102,15 +105,15 @@ function DropArea({ components }: DropAreaProps) {
         })}
       </Layout>
 
-      <Inspector
+      {/* <Inspector
         dashboardComponents={dashboardComponents}
         selectedEditItem={selectedEditItem}
         setInspectorOpen={setInspectorOpen}
         setSelectedEditItem={setSelectedEditItem}
         setDashboardComponents={setDashboardComponents}
         isInspectorOpen={isInspectorOpen}
-        className="fixed top-16 right-10"
-      />
+        className="w-auto"
+      /> */}
     </div>
   );
 }
