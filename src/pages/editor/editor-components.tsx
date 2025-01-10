@@ -1,4 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import BarChart from "@/components/drag-components/bar-chart";
+import DonutChart from "@/components/drag-components/donut-chart";
+import InfoCards from "@/components/drag-components/info-cards";
+import Label from "@/components/drag-components/label";
+import PerformanceTracker from "@/components/drag-components/performance-tracker";
+import StatCard from "@/components/drag-components/stat-card";
+import TabbedContainer from "@/components/drag-components/tabbed-container";
+import Table from "@/components/drag-components/table";
 import data from "@/data/editor/sidebar.json";
 interface Component {
   name: string;
@@ -19,43 +27,43 @@ const componentImages: Record<string, string> = data.components.reduce(
 const components: Component[] = [
   {
     name: "Donut chart",
-    props: ["content", "color", "size", "weight"],
-    element: <div>Donut chart</div>,
+    props: ["content", "apperance", "size", "weight"],
+    element: <DonutChart />,
   },
   {
     name: "Bar chart",
-    props: ["content", "color", "size", "weight"],
-    element: <div>Bar chart</div>,
+    props: ["content", "apperance", "size", "weight"],
+    element: <BarChart />,
   },
   {
     name: "Table",
-    props: ["content", "color", "size", "weight"],
-    element: <div>Table</div>,
+    props: ["content", "apperance", "size", "weight"],
+    element: <Table />,
   },
   {
     name: "Info cards",
-    props: ["content", "color", "size", "weight"],
-    element: <div>Info cards</div>,
+    props: ["content", "apperance", "size", "weight"],
+    element: <InfoCards />,
   },
   {
     name: "Label",
-    props: ["content", "color", "size", "weight"],
-    element: <div>Label</div>,
+    props: ["content", "apperance", "size", "weight"],
+    element: <Label />,
   },
   {
     name: "Performance tracker",
-    props: ["content", "color", "size", "weight"],
-    element: <div>Performance tracker</div>,
+    props: ["content", "apperance", "size", "weight"],
+    element: <PerformanceTracker />,
   },
   {
     name: "Tabbed Container",
-    props: ["content", "color", "size", "weight"],
-    element: <div>Tabbed Container</div>,
+    props: ["content", "apperance", "size", "weight"],
+    element: <TabbedContainer />,
   },
   {
     name: "Stat Card",
-    props: ["content", "color", "size", "weight"],
-    element: <div>Stat Card</div>,
+    props: ["content", "apperance", "size", "weight"],
+    element: <StatCard />,
   },
 ];
 

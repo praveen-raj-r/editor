@@ -15,7 +15,6 @@ const PropertiesDropdown = ({ item }: { item: string }) => {
   const { theme } = useTheme();
   const iconColor = theme === "dark" ? "#fff" : "#808080";
 
-  console.log(item);
   return (
     <Collapsible
       open={open}
@@ -45,7 +44,7 @@ const PropertiesDropdown = ({ item }: { item: string }) => {
       <CollapsibleContent>
         <div className="pb-2 px-4 pt-1">
           <div className="space-y-2">
-            {item === "color" ? (
+            {item === "apperance" ? (
               <Color />
             ) : (
               <div>

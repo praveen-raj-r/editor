@@ -8,6 +8,7 @@ import {
   useState,
 } from "react";
 import ReactGridLayout, { WidthProvider } from "react-grid-layout";
+import { ScrollArea } from "../ui/scroll-area";
 
 const Layout = WidthProvider(ReactGridLayout);
 
@@ -65,49 +66,50 @@ function DropArea({
   };
 
   return (
-    <div className="size-full p-5">
-      <div className="bg-[#f6f6f6] dark:bg-[#1a1919] relative size-full p-3 border-[#3b82f6] border">
+    <div className="size-full p-5 min-w-[990px]">
+      <div className="bg-[#f6f6f6] dark:bg-[#1a1919] relative size-full border-[#3b82f6] border">
         <div
           onDragOver={handleOnDragOver}
           onDrop={handleOnDrop}
-          className="relative w-full h-full p-3 flex gap-1"
+          className="relative w-full h-full flex gap-1"
         >
-          <Layout
-            className="layout border w-full border-[#3b82f6] min-h-96 py-2 px-3"
-            cols={12}
-            layout={layout}
-            rowHeight={30}
-            onLayoutChange={(newLayout) => setLayout(newLayout)}
-          >
-            {dashboardComponents.map((e, index) => {
-              const ComponentType = isValidElement(e.element)
-                ? e.element.type
-                : null;
+          <ScrollArea className="w-full">
+            <Layout
+              className="layout w-full min-h-[calc(100vh-106px)] h-full py-2 px-3"
+              cols={12}
+              layout={layout}
+              rowHeight={30}
+              onLayoutChange={(newLayout) => setLayout(newLayout)}
+            >
+              {dashboardComponents.map((e, index) => {
+                const ComponentType = isValidElement(e.element)
+                  ? e.element.type
+                  : null;
 
-              return (
-                <div
-                  key={index}
-                  className={` py-2 px-3 hover:border-2 bg-red-400 border-1 min-h-max cursor-move hover:border-dashed hover:border-[#3b82f6] ${
-                    index === selectedEditItem
-                      ? "border-[#9e9e9e]"
-                      : "border-transparent"
-                  } `}
-                >
+                return (
                   <div
-                    className="w-full h-full cursor-default overflow-hidden"
-                    onMouseDown={(e) => {
+                    key={index}
+                    className={` py-2 px-3 hover:border-1 border-white border min-h-max cursor-move hover:border-dashed hover:border-[#ce79ce] ${
+                      index === selectedEditItem
+                        ? " !border-[#3b82f6] border-[1.5]"
+                        : "border-transparent"
+                    } `}
+                    onClick={(e) => {
                       e.stopPropagation();
-                      setSelectedEditItem((prevSelected) =>
-                        prevSelected === index ? null : index
-                      );
+                      // setSelectedEditItem((prevSelected) =>
+                      //   prevSelected === index ? null : index
+                      // );
+                      setSelectedEditItem(index);
                     }}
                   >
-                    {ComponentType ? <ComponentType key={index} /> : null}
+                    <div className="w-full cursor-default overflow-hidden">
+                      {ComponentType ? <ComponentType key={index} /> : null}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </Layout>
+                );
+              })}
+            </Layout>
+          </ScrollArea>
         </div>
       </div>
     </div>

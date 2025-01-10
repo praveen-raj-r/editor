@@ -5,6 +5,7 @@ import DotPattern from "@/components/ui/dot-pattern";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import Inspector from "@/components/editor-layout-components/inspector";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 interface Component {
   name: string;
@@ -26,7 +27,7 @@ const EditorCanvas = ({ components }: EditorCanvasProps) => {
 
   return (
     <div className="max-h-[calc(100%-64px)] h-full">
-      <div className="flex h-full w-full">
+      <div className="flex h-full w-full relative">
         <div className="w-full relative h-full">
           {/* Design Background */}
           <DotPattern
@@ -35,15 +36,22 @@ const EditorCanvas = ({ components }: EditorCanvasProps) => {
             )}
           />
 
-          <DropArea
-            dashboardComponents={dashboardComponents}
-            setDashboardComponents={setDashboardComponents}
-            selectedEditItem={selectedEditItem}
-            setSelectedEditItem={setSelectedEditItem}
-            isInspectorOpen={isInspectorOpen}
-            setInspectorOpen={setInspectorOpen}
-            components={components}
-          />
+          <ScrollArea
+            className={`w-[calc(100vw-${
+              isInspectorOpen ? "320px" : ""
+            }-366px)] h-full`}
+          >
+            <DropArea
+              dashboardComponents={dashboardComponents}
+              setDashboardComponents={setDashboardComponents}
+              selectedEditItem={selectedEditItem}
+              setSelectedEditItem={setSelectedEditItem}
+              isInspectorOpen={isInspectorOpen}
+              setInspectorOpen={setInspectorOpen}
+              components={components}
+            />
+            <ScrollBar orientation="horizontal" />
+          </ScrollArea>
 
           {!isInspectorOpen && (
             <OpenInspectorButton setInspectorOpen={setInspectorOpen} />

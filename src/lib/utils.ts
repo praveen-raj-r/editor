@@ -5,6 +5,46 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+export function rgbaObjectToHex(rgba: {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+}) {
+  const { r, g, b, a } = rgba;
+
+  // Validate input values
+  if (
+    r < 0 ||
+    r > 255 ||
+    g < 0 ||
+    g > 255 ||
+    b < 0 ||
+    b > 255 ||
+    a < 0 ||
+    a > 1
+  ) {
+    throw new Error("Invalid RGBA values");
+  }
+
+  // Convert RGBA to HEX
+  const alpha = Math.round(a * 255); // Scale alpha to 0–255
+  return (
+    "#" +
+    [r, g, b, alpha]
+      .map((component) => component.toString(16).padStart(2, "0"))
+      .join("")
+  );
+}
+export const rgbaObjectToString = (color: {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+}): string => {
+  const { r, g, b, a } = color;
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+};
 
 export const generateTempData = (range: number, chartType: chartTypes) => {
   return Array.from({ length: range }, (_, i) => {

@@ -4,7 +4,7 @@ import ThemeToggle from "./theme-toggle";
 import ProfileDropdown from "./profile-dropdown";
 import NotificationsSheet from "./notifications-sheet";
 import AnimatedGradientText from "../ui/animated-gradient-text";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Play } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "../ui/button";
@@ -48,6 +48,13 @@ const AppHeader: FC = () => {
           )}
 
           {isNotEditor && <NotificationsSheet />}
+          {!isNotEditor && (
+            <Link to="/preview-page">
+              <Button variant="secondary" size="sm">
+                <Play />
+              </Button>
+            </Link>
+          )}
 
           <ThemeToggle />
 

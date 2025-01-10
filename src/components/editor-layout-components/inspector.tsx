@@ -89,5 +89,4 @@ const Inspector = ({
   );
 };
 
-
 export default Inspector;
